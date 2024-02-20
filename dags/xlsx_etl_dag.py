@@ -4,7 +4,10 @@ from airflow.utils.dates import days_ago
 from xlsx_tl_processor import main
 from xlsx_email_extractor import XlsxEmailExtractor
 from email_config import email_credentials
+from datetime import datetime, timedelta
 
+
+today = datetime.combine(datetime.today(), datetime.min.time())
 
 def download_and_save_xlsx(**kwargs):
     username = kwargs.get('username')
@@ -26,7 +29,7 @@ def xlsx_transform_load_to_db(**kwargs):
 
 default_args = {
     'owner': 'airflow',
-    'start_date': days_ago(1),
+    'start_date': today,
 }
 
 with DAG('xlsx_etl_dag',
